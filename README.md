@@ -1,15 +1,20 @@
-# SFU CMPT 340 Project Template -- Replace with project title
-This repository is a template for your CMPT 340 course project.
-Replace the title with your project title, and **add a snappy acronym that people remember (mnemonic)**.
+# Cell Detection from Cell-Tissue Interaction
+OCELOT -- Overlapped Cell On Tissue Data Histopathology
 
-Add a 1-2 line summary of your project here.
+# Introduction ✏️
+Cell detection in histology images is one of the most important tasks in computational pathology. Recently, the OCELOT dataset is released in [dataset](https://openaccess.thecvf.com/content/CVPR2023/html/Ryu_OCELOT_Overlapped_Cell_on_Tissue_Dataset_for_Histopathology_CVPR_2023_paper.html) which provides overlapping cell and tissue annotations on images acquired from multiple organs stained with H&E. [dataset](https://openaccess.thecvf.com/content/CVPR2023/html/Ryu_OCELOT_Overlapped_Cell_on_Tissue_Dataset_for_Histopathology_CVPR_2023_paper.html) showed that understanding the relationship between the surrounding tissue structures and individual cells can boost cell detection performance.
+
+With the newly released OCELOT dataset, our project is aim to promote research on how to utilize cell-tissue relationships for better cell detection. Unlike typical cell detection challenges, our project can utilize tissue patches and annotation for the purpose of boosting cell detection performance.
 
 ## Important Links
 
-| [Timesheet](https://google.com) | [Slack channel](https://google.com) | [Project report](https://google.com) |
-|-----------|---------------|-------------------------|
+| [Dataset Download](https://zenodo.org/records/7844149) | [Dataset Website](https://lunit-io.github.io/research/ocelot_dataset/) | [Evaluation Metric](https://ocelot2023.grand-challenge.org/evaluation-metric/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com)
 
 
+
+- Dataset Download: Link to download the dataset of this project.
+- Dataset Website: Link to the website of the dataset.
+- Evaluation Metric: Link to evaluation we are using in this project.
 - Timesheet: Link your timesheet (pinned in your project's Slack channel) where you track per student the time and tasks completed/participated for this project/
 - Slack channel: Link your private Slack project channel.
 - Project report: Link your Overleaf project report document.
