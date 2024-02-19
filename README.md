@@ -10,7 +10,7 @@ With the newly released OCELOT dataset, our project is aim to promote research o
 
 ## Important Links 🔗
 
-| [Dataset Download](https://zenodo.org/records/7844149) | [Dataset Website](https://lunit-io.github.io/research/ocelot_dataset/) | [Evaluation Metric](https://ocelot2023.grand-challenge.org/evaluation-metric/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com)
+| [Dataset Download](https://zenodo.org/records/7844149) | [Dataset Website](https://lunit-io.github.io/research/ocelot_dataset/) | [Evaluation Metric](https://ocelot2023.grand-challenge.org/evaluation-metric/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com) |
 
 
 
