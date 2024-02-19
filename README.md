@@ -1,25 +1,21 @@
 
-# Cell Detection from Cell-Tissue Interaction ![gc_banner_GzbItDZ x20](https://github.com/sfu-cmpt340/2024_1_project_02/assets/113268694/1890d570-5fa6-4a96-91d0-3700241e5e78)
-
-OCELOT -- Overlapped Cell On Tissue Data Histopathology
+# Spine Segmentation![SPIDER_banner_F4wHbpf x20](https://github.com/sfu-cmpt340/2024_1_project_02/assets/113268694/c3f9ff84-e48e-400e-81f6-0014770a028e)
 
 # Introduction ✏️
-Cell detection in histology images is one of the most important tasks in computational pathology. Recently, the OCELOT dataset is released in [dataset](https://openaccess.thecvf.com/content/CVPR2023/html/Ryu_OCELOT_Overlapped_Cell_on_Tissue_Dataset_for_Histopathology_CVPR_2023_paper.html) which provides overlapping cell and tissue annotations on images acquired from multiple organs stained with H&E. [dataset](https://openaccess.thecvf.com/content/CVPR2023/html/Ryu_OCELOT_Overlapped_Cell_on_Tissue_Dataset_for_Histopathology_CVPR_2023_paper.html) showed that understanding the relationship between the surrounding tissue structures and individual cells can boost cell detection performance.
-
-With the newly released OCELOT dataset, our project is aim to promote research on how to utilize cell-tissue relationships for better cell detection. Unlike typical cell detection challenges, our project can utilize tissue patches and annotation for the purpose of boosting cell detection performance.
+Low back pain (LBP) is a significant cause of disability and a major societal healthcare issue. One of the commonly used diagnostic and treatment decision-making tools for LBP is magnetic resonance imaging (MRI) of the lumbar spine. 
+The project focuses on the segmentation of three anatomical structures in lumbar spine MRI: vertebrae, intervertebral discs (IVDs), and spinal canal. The segmentation task aims to produce separate masks for each vertebra, IVD, and the spinal canal in the lumbar spine MRI volume. The numbering of the vertebrae and IVDs is not specific and may vary across different cases.
 
 ## Important Links 🔗
 
-| [Dataset Download](https://zenodo.org/records/7844149) | [Dataset Website](https://lunit-io.github.io/research/ocelot_dataset/) | [Evaluation Metric](https://ocelot2023.grand-challenge.org/evaluation-metric/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com) |
+| [Dataset Download](https://zenodo.org/records/8009680) | [Evaluation Metric](https://spider.grand-challenge.org/segmentation-evaluation/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com) |
 
 
 
 - Dataset Download: Link to download the dataset of this project.
-- Dataset Website: Link to the website of the dataset.
 - Evaluation Metric: Link to evaluation we are using in this project.
-- Timesheet: Link your timesheet (pinned in your project's Slack channel) where you track per student the time and tasks completed/participated for this project/
-- Slack channel: Link your private Slack project channel.
-- Project report: Link your Overleaf project report document.
+- Slack channel: Link to private Slack project channel.
+- Project report: Link to Overleaf project report document.
+- Timesheet: Link to timesheet (pinned in your project's Slack channel) where you track per student the time and tasks completed/participated for this project/
 
 
 ## Video/demo/GIF
