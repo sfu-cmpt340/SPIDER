@@ -1,4 +1,6 @@
-# Cell Detection from Cell-Tissue Interaction
+
+# Cell Detection from Cell-Tissue Interaction ![gc_banner_GzbItDZ x20](https://github.com/sfu-cmpt340/2024_1_project_02/assets/113268694/1890d570-5fa6-4a96-91d0-3700241e5e78)
+
 OCELOT -- Overlapped Cell On Tissue Data Histopathology
 
 # Introduction ✏️
@@ -6,7 +8,7 @@ Cell detection in histology images is one of the most important tasks in computa
 
 With the newly released OCELOT dataset, our project is aim to promote research on how to utilize cell-tissue relationships for better cell detection. Unlike typical cell detection challenges, our project can utilize tissue patches and annotation for the purpose of boosting cell detection performance.
 
-## Important Links
+## Important Links 🔗
 
 | [Dataset Download](https://zenodo.org/records/7844149) | [Dataset Website](https://lunit-io.github.io/research/ocelot_dataset/) | [Evaluation Metric](https://ocelot2023.grand-challenge.org/evaluation-metric/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com)
 
