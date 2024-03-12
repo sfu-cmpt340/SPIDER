@@ -1,7 +1,7 @@
 
 # Spine Segmentation![SPIDER_banner_F4wHbpf x20](https://github.com/sfu-cmpt340/2024_1_project_02/assets/113268694/c3f9ff84-e48e-400e-81f6-0014770a028e)
 
-# Introduction ✏️
+# introduction ✏️
 Low back pain (LBP) is a significant cause of disability and a major societal healthcare issue. One of the commonly used diagnostic and treatment decision-making tools for LBP is magnetic resonance imaging (MRI) of the lumbar spine. 
 The project focuses on the segmentation of three anatomical structures in lumbar spine MRI: vertebrae, intervertebral discs (IVDs), and spinal canal. The segmentation task aims to produce separate masks for each vertebra, IVD, and the spinal canal in the lumbar spine MRI volume. The numbering of the vertebrae and IVDs is not specific and may vary across different cases.
 
