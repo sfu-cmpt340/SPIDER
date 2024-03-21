@@ -1,13 +1,15 @@
 
-# Spine Segmentation![SPIDER_banner_F4wHbpf x20](https://github.com/sfu-cmpt340/2024_1_project_02/assets/113268694/c3f9ff84-e48e-400e-81f6-0014770a028e)
+# Fetal Health Classification from Cardiotocography Data![download](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/559234c8-60a4-4a66-862d-5a1c8b7c89cf)
+
 
 # Introduction ✏️
-Low back pain (LBP) is a significant cause of disability and a major societal healthcare issue. One of the commonly used diagnostic and treatment decision-making tools for LBP is magnetic resonance imaging (MRI) of the lumbar spine. 
-The project focuses on the segmentation of three anatomical structures in lumbar spine MRI: vertebrae, intervertebral discs (IVDs), and spinal canal. The segmentation task aims to produce separate masks for each vertebra, IVD, and the spinal canal in the lumbar spine MRI volume. The numbering of the vertebrae and IVDs is not specific and may vary across different cases.
+Using this [dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data), which has cardiotocography (CTG) biosignals for 2126 fetuses, each with 22 features and a label: Normal, Suspect, and Pathological.
+Our goal is to create a robust model which can predict fetal health from this data.
+We plan to train and test several classification models (such as linear, svm, supervised learning ML) to predict/classify the health of the fetus, and identify which model is most effective.
 
 ## Important Links 🔗
 
-| [Dataset Download](https://zenodo.org/records/8009680) | [Evaluation Metric](https://spider.grand-challenge.org/segmentation-evaluation/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com) |
+| [Dataset Download](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data) | [Evaluation Metric](/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://google.com) | [Timesheet](https://google.com) |
 
 
 
