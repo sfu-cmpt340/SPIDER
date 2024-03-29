@@ -4,6 +4,16 @@ import pandas as pd
 folder_path = 'dat'
 all_data = []
 
+def map_score(score):
+    if score <= 4:
+        return 0
+    elif score <= 8:
+        return 1
+    else:
+        return 2
+    
+simplify = True
+
 for file_name in os.listdir(folder_path):
     if file_name.endswith('.hea'):
         data = {}
@@ -18,6 +28,8 @@ for file_name in os.listdir(folder_path):
                     if len(parts) == 2:
                         key = parts[0][1:]
                         value = parts[1]
+                        if key in ['Apgar1', 'Apgar5'] and simplify:
+                            value = map_score(int(value))
                         data[key] = value
                     else:
                         outcome_measures_started = False
