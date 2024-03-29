@@ -23,17 +23,15 @@
 # processing in this paper. Taking the signal labeled No. 1001 as a typical example, the result of this artifact removal scheme is presented in Figure 3.
 
 
-# TODO:
-# - Replace interp with spline interpolation for filter_large_changes
 
 from pprint import pprint
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-# import scipy
-# import scipy.signal
-# from scipy import interpolate
+import scipy
+import scipy.signal
+from scipy import interpolate
 
 
 def find_valid_start(sig, n_stable=5, min_delta=10):
@@ -229,42 +227,100 @@ def get_valid_segments(orig_hr, ts, recno, max_change=25, verbose=False, verbose
 
              })
 
-    selected_segments = sorted(selected_segments, key=lambda x: -x['pct_valid'])
-    if verbose:
-        for seg in selected_segments:
-            seg_start = seg['seg_start']
-            seg_end = seg['seg_end']
-            seg_hr = seg['seg_hr']
-            seg_tm = seg['seg_ts'] / 60
-            orig_seg_hr = seg['orig_seg_hr']
-            mask = seg['mask']
-            pct_valid = seg['pct_valid']
+    # selected_segments = sorted(selected_segments, key=lambda x: -x['pct_valid'])
+    # if verbose:
+    #     for seg in selected_segments:
+    #         seg_start = seg['seg_start']
+    #         seg_end = seg['seg_end']
+    #         seg_hr = seg['seg_hr']
+    #         seg_tm = seg['seg_ts'] / 60
+    #         orig_seg_hr = seg['orig_seg_hr']
+    #         mask = seg['mask']
+    #         pct_valid = seg['pct_valid']
 
-            plt.figure(figsize=(12, 2))
-            plt.title('{}: Final Signal  {}-{}'.format(recno, seg_start, seg_end))
-            plt.plot(seg_tm, seg_hr)
-            plt.plot(seg_tm, orig_seg_hr, alpha=0.25)
-            plt.xlim(seg_tm[0], seg_tm[-1])
-            plt.ylim(50, 200)
-            plt.show()
+    #         plt.figure(figsize=(12, 2))
+    #         plt.title('{}: Final Signal  {}-{}'.format(recno, seg_start, seg_end))
+    #         plt.plot(seg_tm, seg_hr)
+    #         plt.plot(seg_tm, orig_seg_hr, alpha=0.25)
+    #         plt.xlim(seg_tm[0], seg_tm[-1])
+    #         plt.ylim(50, 200)
+    #         plt.show()
 
-            plt.figure(figsize=(12, 0.75))
-            plt.title('{}: Invalid'.format(recno))
-            plt.plot(seg_tm, ~mask)
-            plt.xlim(seg_tm[0], seg_tm[-1])
-            plt.ylim(-0.1, 1.1)
-            plt.show()
+    #         plt.figure(figsize=(12, 0.75))
+    #         plt.title('{}: Invalid'.format(recno))
+    #         plt.plot(seg_tm, ~mask)
+    #         plt.xlim(seg_tm[0], seg_tm[-1])
+    #         plt.ylim(-0.1, 1.1)
+    #         plt.show()
 
-            if verbose_details:
-                plt.figure(figsize=(12, 2))
-                plt.title('{}: Final Signal diff  {}-{}'.format(recno, seg_start, seg_end))
-                plt.plot(seg_tm[:-1], np.diff(seg_hr))
-                plt.plot([seg_tm[0], seg_tm[-1]], [0,0], 'r--')
-                plt.plot([seg_tm[0], seg_tm[-1]], [max_change, max_change], 'k--')
-                plt.plot([seg_tm[0], seg_tm[-1]], [-max_change, -max_change], 'k--')
-                plt.xlim(seg_tm[0], seg_tm[-1])
-                plt.show()
+    #         if verbose_details:
+    #             plt.figure(figsize=(12, 2))
+    #             plt.title('{}: Final Signal diff  {}-{}'.format(recno, seg_start, seg_end))
+    #             plt.plot(seg_tm[:-1], np.diff(seg_hr))
+    #             plt.plot([seg_tm[0], seg_tm[-1]], [0,0], 'r--')
+    #             plt.plot([seg_tm[0], seg_tm[-1]], [max_change, max_change], 'k--')
+    #             plt.plot([seg_tm[0], seg_tm[-1]], [-max_change, -max_change], 'k--')
+    #             plt.xlim(seg_tm[0], seg_tm[-1])
+    #             plt.show()
 
-            print('Valid: {:0.1f}%'.format(100 * pct_valid))
+    #         print('Valid: {:0.1f}%'.format(100 * pct_valid))
 
     return selected_segments
+
+#written by Angelina Xia
+# def create_new_signal(orig_hr, ts, recno, max_change=25, verbose=False, verbose_details=False):
+#     """returns a fully denoised signal"""
+
+#     i_start = find_valid_start(orig_hr)
+
+#     if i_start is None:
+#         return []
+
+#         orig_hr = orig_hr[i_start:]
+#         sig_hr = np.copy(orig_hr)
+#         ts = ts[i_start:]
+#         tm = ts / 60
+
+#         sig_hr = trim_short_segments(sig_hr, verbose=verbose_details)
+
+#         selected_segments = []
+
+#         for seg_start, seg_end in valid_segments:
+#         # get segment
+#             seg_hr = sig_hr[seg_start:seg_end]
+#             seg_ts = ts[seg_start:seg_end]
+#             seg_tm = tm[seg_start:seg_end]
+
+#             seg_hr = filter_extreme_values(seg_hr)
+
+#             # adjust for stability at start of recording)
+#             new_start = find_valid_start(seg_hr)
+#             if new_start is None:
+#                 print('unable to find stable region')
+#                 continue
+#             elif new_start != seg_start:
+#                 seg_start = seg_start + new_start
+#                 seg_hr = sig_hr[seg_start:seg_end]
+#                 seg_ts = ts[seg_start:seg_end]
+#                 seg_tm = tm[seg_start:seg_end]
+
+#                 seg_hr, mask = replace_missing_values(seg_hr)
+#                 seg_hr, mask = filter_large_changes(seg_hr, mask, seg_tm, max_change=max_change, verbose=verbose_details)
+
+#                 selected_segments.append(
+#                 {'seg_start': seg_start,
+#                 'seg_end': seg_end,
+#                 'seg_hr': seg_hr,
+#                 'seg_ts': seg_ts,
+#                 'orig_seg_hr': orig_hr[seg_start:seg_end],
+#                 'mask': mask,
+#                 'pct_valid': np.mean(mask)
+
+#             })
+
+#     signal = []
+#     len_s = len(selected_segments)
+#     for i in len_s:
+#         signal = signal.append(selected_segments(i).seg_hr)
+
+#     return signal
