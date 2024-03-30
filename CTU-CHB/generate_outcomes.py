@@ -4,14 +4,16 @@ import pandas as pd
 folder_path = 'dat'
 all_data = []
 
-def map_score(score):
-    if score <= 4:
-        return 0
-    elif score <= 8:
-        return 1
-    else:
-        return 2
-    
+def map_score(score, key):
+    thresholds = {
+        'Apgar1': [(6, 0), (8, 1)],
+        'Apgar5': [(8, 0), (9, 1)]
+    }
+    for threshold, mapped_value in thresholds.get(key, [(float('inf'), 2)]):
+        if score <= threshold:
+            return mapped_value
+    return 2
+
 simplify = True
 
 for file_name in os.listdir(folder_path):
@@ -29,7 +31,8 @@ for file_name in os.listdir(folder_path):
                         key = parts[0][1:]
                         value = parts[1]
                         if key in ['Apgar1', 'Apgar5'] and simplify:
-                            value = map_score(int(value))
+                            data[key + 'unmapped'] = int(value)
+                            value = map_score(int(value), key)
                         data[key] = value
                     else:
                         outcome_measures_started = False
@@ -41,4 +44,6 @@ for file_name in os.listdir(folder_path):
 
 df = pd.DataFrame(all_data)
 print(df)
+print(df['Apgar1'].value_counts())
+print(df['Apgar5'].value_counts())
 df.to_csv('outcomes.csv', index=False)
