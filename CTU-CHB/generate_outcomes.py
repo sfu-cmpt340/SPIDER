@@ -1,7 +1,8 @@
 import os
 import pandas as pd
 
-folder_path = 'dat'
+dat_path = 'dat'
+folder_path = 'processed_dat'
 all_data = []
 
 def map_score(score, key):
@@ -14,12 +15,16 @@ def map_score(score, key):
             return mapped_value
     return 2
 
-simplify = True
+remap = False
 
-for file_name in os.listdir(folder_path):
+for file_name in os.listdir(dat_path):
     if file_name.endswith('.hea'):
+        dat_file_path = os.path.join(folder_path, os.path.splitext(file_name)[0] + '.dat')
+        if (not os.path.exists(dat_file_path)) or os.path.getsize(dat_file_path) <= 0:
+            print(f"Empty dat at {dat_file_path}")
+            continue
         data = {}
-        with open(os.path.join(folder_path, file_name), 'r') as file:
+        with open(os.path.join(dat_path, file_name), 'r') as file:
             outcome_measures_started = False
             for line in file:
                 line = line.strip()
@@ -30,7 +35,7 @@ for file_name in os.listdir(folder_path):
                     if len(parts) == 2:
                         key = parts[0][1:]
                         value = parts[1]
-                        if key in ['Apgar1', 'Apgar5'] and simplify:
+                        if key in ['Apgar1', 'Apgar5'] and remap:
                             data[key + 'unmapped'] = int(value)
                             value = map_score(int(value), key)
                         data[key] = value
@@ -44,6 +49,6 @@ for file_name in os.listdir(folder_path):
 
 df = pd.DataFrame(all_data)
 print(df)
-print(df['Apgar1'].value_counts())
-print(df['Apgar5'].value_counts())
+# print(df['Apgar1'].value_counts())
+# print(df['Apgar5'].value_counts())
 df.to_csv('outcomes.csv', index=False)
