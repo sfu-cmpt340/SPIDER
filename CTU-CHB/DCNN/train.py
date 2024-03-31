@@ -5,6 +5,7 @@ import os
 import gzip
 import json
 import pickle
+import sys
 import tensorflow as tf
 
 from sklearn.utils import class_weight
@@ -18,6 +19,7 @@ from tensorflow.keras.regularizers import l2
 from tensorflow.keras.backend import batch_get_value
 from tensorflow_model_optimization.sparsity import keras as sparsity
 
+num_epochs = int(sys.argv[1])
 
 np.random.seed(42)
 tf.random.set_seed(42)
@@ -70,10 +72,11 @@ model.compile(
     ],
 )
 
+
 model.fit(
     train_images_resampled,
     train_labels_resampled,
-    epochs=10,
+    epochs=num_epochs,
     batch_size=32,
     validation_split=0.25,
     verbose=1,
