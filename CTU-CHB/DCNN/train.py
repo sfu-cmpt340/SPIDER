@@ -83,6 +83,8 @@ model.fit(
     class_weight=class_weight_dict
 )
 
+model.evaluate(test_images, test_labels, verbose=2)
+
 # pruning testing
 # pruning_params = {
 #     'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=0.50, final_sparsity=0.90, begin_step=0, end_step=1000)

@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
 import gzip
 
 from sklearn.model_selection import train_test_split
@@ -17,10 +18,12 @@ print("Generating test/train split...")
 images = []
 for filename in filenames:
     try:
-        path = os.path.join(os.getcwd(), '../spectrogram', filename)
+        # filename = filename[:4] + '_recurrence_plot.png'
+        path = os.path.join(os.getcwd(), '../' + sys.argv[1], filename)
         img = load_img(path, target_size=(150, 150))
         img_array = img_to_array(img)
         images.append(img_array)
+        if not img: print(filename)
     except Exception as e:
         print(f"Error loading image {filename}: {e}")
 
