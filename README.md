@@ -140,7 +140,7 @@ repository
 ├── CTU-CHB                              ## Work on CTU-CHB database
 ├── README.md                            ## Introduction of the project
 ├── Tabulate data.ipynb                  ## To tabulate the data 
-├── requirements.yml                     ## If you use conda
+├── requirements.txt                     ## Setup requirements
 ```
 
 <a name="installation"></a>
