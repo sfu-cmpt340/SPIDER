@@ -5,11 +5,6 @@
 
 ### Signal Preprocessing
 
-# In clinical practice, during the recording process using Doppler ultrasound, the FHR signal
-# contains many artifacts or spikes due to maternal and fetal movements or transducer displacement [1].
-# Therefore, before further analysis, we eliminated noise to obtain a relatively pure signal for more accurate
-# results, as described in Reference [18].
-
 # In this work, we employed a preprocessing involving three steps.  Assume x(i) is an FHR signal
 # with unit of beats per min (bpm) and a frequency of 4 Hz, where i = 1,2, ..., N and N is the number of samples.
 # - A stable segment is chosen as the starting point; in such a segment, five adjacent samples
@@ -227,6 +222,7 @@ def get_valid_segments(orig_hr, ts, recno, max_change=25, verbose=False, verbose
 
              })
 
+    # This code was commented out as this function was not useful to our project.
     # selected_segments = sorted(selected_segments, key=lambda x: -x['pct_valid'])
     # if verbose:
     #     for seg in selected_segments:
@@ -266,61 +262,3 @@ def get_valid_segments(orig_hr, ts, recno, max_change=25, verbose=False, verbose
     #         print('Valid: {:0.1f}%'.format(100 * pct_valid))
 
     return selected_segments
-
-#written by Angelina Xia
-# def create_new_signal(orig_hr, ts, recno, max_change=25, verbose=False, verbose_details=False):
-#     """returns a fully denoised signal"""
-
-#     i_start = find_valid_start(orig_hr)
-
-#     if i_start is None:
-#         return []
-
-#         orig_hr = orig_hr[i_start:]
-#         sig_hr = np.copy(orig_hr)
-#         ts = ts[i_start:]
-#         tm = ts / 60
-
-#         sig_hr = trim_short_segments(sig_hr, verbose=verbose_details)
-
-#         selected_segments = []
-
-#         for seg_start, seg_end in valid_segments:
-#         # get segment
-#             seg_hr = sig_hr[seg_start:seg_end]
-#             seg_ts = ts[seg_start:seg_end]
-#             seg_tm = tm[seg_start:seg_end]
-
-#             seg_hr = filter_extreme_values(seg_hr)
-
-#             # adjust for stability at start of recording)
-#             new_start = find_valid_start(seg_hr)
-#             if new_start is None:
-#                 print('unable to find stable region')
-#                 continue
-#             elif new_start != seg_start:
-#                 seg_start = seg_start + new_start
-#                 seg_hr = sig_hr[seg_start:seg_end]
-#                 seg_ts = ts[seg_start:seg_end]
-#                 seg_tm = tm[seg_start:seg_end]
-
-#                 seg_hr, mask = replace_missing_values(seg_hr)
-#                 seg_hr, mask = filter_large_changes(seg_hr, mask, seg_tm, max_change=max_change, verbose=verbose_details)
-
-#                 selected_segments.append(
-#                 {'seg_start': seg_start,
-#                 'seg_end': seg_end,
-#                 'seg_hr': seg_hr,
-#                 'seg_ts': seg_ts,
-#                 'orig_seg_hr': orig_hr[seg_start:seg_end],
-#                 'mask': mask,
-#                 'pct_valid': np.mean(mask)
-
-#             })
-
-#     signal = []
-#     len_s = len(selected_segments)
-#     for i in len_s:
-#         signal = signal.append(selected_segments(i).seg_hr)
-
-#     return signal
