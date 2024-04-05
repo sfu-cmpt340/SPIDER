@@ -5,7 +5,7 @@ import gzip
 import json
 import tensorflow as tf
 
-from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
+from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score, confusion_matrix
 
 with open('model_architecture.json', 'r') as json_file:
     architecture = json.load(json_file)
@@ -21,7 +21,6 @@ predicted_classes = np.argmax(predictions, axis=1)
 true_classes = np.argmax(test_labels, axis=1)
 class_counts = np.bincount(predicted_classes)
 
-print("Count of guesses in each class:")
 for cls, count in enumerate(class_counts):
     print(f"Class {cls}: {count} guesses")
 
@@ -29,8 +28,10 @@ accuracy = accuracy_score(true_classes, predicted_classes)
 recall = recall_score(true_classes, predicted_classes, average='macro')
 f1 = f1_score(true_classes, predicted_classes, average='macro')
 precision = precision_score(true_classes, predicted_classes, average='macro')
+conf_matrix = confusion_matrix(true_classes, predicted_classes)
 
 print(f"Accuracy: {accuracy}")
 print(f"Recall: {recall}")
 print(f"F1-score: {f1}")
 print(f"Precision: {precision}")
+print(conf_matrix)

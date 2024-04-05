@@ -61,11 +61,11 @@ model = Sequential([
     layers.MaxPooling2D((3, 3)),
     layers.Flatten(),
     layers.Dense(128, activation='relu', kernel_regularizer=l2(0.001)),
-    layers.Dropout(0.7),
+    layers.Dropout(0.8),
     layers.Dense(2, activation='softmax')
 ])
 
-optimizer = Adam(learning_rate=0.001)
+optimizer = Adam(learning_rate=0.0001)
 model.compile(
     optimizer=optimizer,
     loss='categorical_crossentropy',
@@ -77,7 +77,7 @@ model.compile(
     ],
 )
 
-model.fit(
+history = model.fit(
     train_images_resampled,
     train_labels_resampled,
     epochs=num_epochs,
@@ -87,15 +87,21 @@ model.fit(
     class_weight=class_weight_dict
 )
 
-model.evaluate(test_images, test_labels, verbose=2)
-
-
 # pruning testing
 # pruning_params = {
 #     'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=0.50, final_sparsity=0.90, begin_step=0, end_step=1000)
 # }
 
 # model = sparsity.prune_low_magnitude(model, **pruning_params)
+
+plt.figure(figsize=(8, 2))
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Model Loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend()
+plt.show()
 
 model_json = model.to_json()
 with open('model_architecture.json', 'w') as json_file:
