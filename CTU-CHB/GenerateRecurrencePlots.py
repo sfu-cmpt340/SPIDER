@@ -29,7 +29,7 @@ for i in range(0, 545): # 545 files in the directory
         plt.imshow(rp, cmap='binary')
         plt.axis('off')
         plt.tight_layout()
-        plot_file_name = os.path.splitext(file_name)[0] + '_recurrence_plot.png'
+        plot_file_name = os.path.splitext(file_name)[0] + '.png'
         plot_path = os.path.join(output_directory, plot_file_name)
         plt.gca().set_axis_off()
         plt.subplots_adjust(top = 1, bottom = 0, right = 1, left = 0, 

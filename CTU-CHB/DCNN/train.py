@@ -13,7 +13,6 @@ from tensorflow import reshape
 from tensorflow.keras import metrics
 from tensorflow.keras import layers, models
 from tensorflow.keras.models import Sequential, save_model
-from tensorflow.keras.layers import Dense, BatchNormalization, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.backend import batch_get_value
@@ -50,13 +49,19 @@ class_weights = class_weight.compute_class_weight(
 class_weight_dict = dict(enumerate(class_weights))
 
 model = Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)),
-    layers.MaxPooling2D((2, 2)),
+    layers.Input(shape=(150, 150, 3)),
+    layers.Conv2D(32, (3, 3), activation='relu'),
+    layers.BatchNormalization(),
+    layers.MaxPooling2D((3, 3)),
     layers.Conv2D(64, (3, 3), activation='relu'),
-    layers.MaxPooling2D((2, 2)),
+    layers.BatchNormalization(),
+    layers.MaxPooling2D((3, 3)),
+    layers.Conv2D(128, (3, 3), activation='relu'),
+    layers.BatchNormalization(),
+    layers.MaxPooling2D((3, 3)),
     layers.Flatten(),
-    layers.Dense(64, activation='relu', kernel_regularizer=l2(0.001)),
-    layers.Dropout(0.8),
+    layers.Dense(128, activation='relu', kernel_regularizer=l2(0.001)),
+    layers.Dropout(0.7),
     layers.Dense(2, activation='softmax')
 ])
 
@@ -72,7 +77,6 @@ model.compile(
     ],
 )
 
-
 model.fit(
     train_images_resampled,
     train_labels_resampled,
@@ -84,6 +88,7 @@ model.fit(
 )
 
 model.evaluate(test_images, test_labels, verbose=2)
+
 
 # pruning testing
 # pruning_params = {
