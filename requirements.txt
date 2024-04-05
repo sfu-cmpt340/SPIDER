@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+tensorflow
+keras
+imblearn
+tf_keras
+tensorflow_model_optimization 
+scipy
+os
+wfdb
