@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 pd.options.mode.chained_assignment = None
 
 from sklearn.model_selection import train_test_split
@@ -13,12 +12,9 @@ from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import balanced_accuracy_score
 
 from sklearn.inspection import permutation_importance
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-import scipy.stats as stats
-
 from sklearn.metrics import classification_report
+
+import matplotlib.pyplot as plt
 
 
 # Load Dataset
@@ -63,14 +59,13 @@ def ShowFeatureImportance(X, y, model):
     X_train, X_test, y_train, y_test = train_test_split(X, y)
     model = model.fit(X_train, y_train)
 
-    hist_dt = pd.DataFrame({'Feature': X.columns, 'Feature importance': model.feature_importances_})
-    hist_dt = hist_dt.sort_values(by='Feature importance',ascending=False)
-    fig, axes = plt.subplots(figsize=(20, 10))
-    sns.barplot(x="Feature", y="Feature importance", data=hist_dt, ax=axes)
-    axes.set_title("Feature Importance", fontsize=16)
-    axes.set_xlabel("Feature", fontsize=14)
-    axes.set_ylabel("Feature Importance", fontsize=14)
-    axes.tick_params(axis="x", labelrotation=45, labelsize=12)
+    hist_df = pd.DataFrame({'Feature': X.columns, 'Feature importance': model.feature_importances_})
+    hist_df = hist_df.sort_values(by='Feature importance', ascending=True)
+    plt.figure(figsize=(10, 4))
+    plt.barh(hist_df['Feature'], hist_df['Feature importance'])
+    plt.xlabel('Importance')
+    plt.ylabel('Feature')
+    plt.title(model)
     plt.tight_layout()
     plt.show()
 
@@ -86,14 +81,13 @@ PrintResults(X, y, model_nb)
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 model_nb = model_nb.fit(X_train, y_train)
 imps_gb = permutation_importance(model_nb, X_train, y_train)
-fig, axes = plt.subplots(figsize=(20, 10))
+plt.figure(figsize=(10, 4))
 hist_bay = pd.DataFrame({'Feature': X.columns, 'Feature importance': imps_gb.importances_mean})
-hist_bay = hist_bay.sort_values(by='Feature importance',ascending=False)
-sns.barplot(x="Feature", y="Feature importance", data=hist_bay, ax=axes)
-axes.set_title("Gaussian Naive Bayes Feature Importance", fontsize=16)
-axes.set_xlabel("Feature", fontsize=14)
-axes.set_ylabel("Feature Importance", fontsize=14)
-axes.tick_params(axis="x", labelrotation=45, labelsize=12)
+hist_bay = hist_bay.sort_values(by='Feature importance', ascending=True)
+plt.barh(hist_bay['Feature'], hist_bay['Feature importance'])
+plt.xlabel('Importance')
+plt.ylabel('Feature')
+plt.title(model_nb)
 plt.tight_layout()
 plt.show()
 
