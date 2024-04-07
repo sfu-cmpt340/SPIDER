@@ -3,15 +3,15 @@
 
 
 # Introduction ✏️
-Using this [dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data), which has cardiotocography (CTG) biosignals for 2126 fetuses, each with 22 features and a label: Normal, Suspect, and Pathological.
+Using this [tabulated dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data), which has cardiotocography (CTG) biosignals for 2126 fetuses, each with 22 features and a label: Normal, Suspect, and Pathological.
+[CTU-CHB dataset](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/)
+
 Our goal is to create a robust model which can predict fetal health from this data.
 We plan to train and test several classification models (such as linear, svm, supervised learning ML) to predict/classify the health of the fetus, and identify which model is most effective.
 
 ## Important Links 🔗
 
-| [Dataset Download](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://www.overleaf.com/project/65a57b95a9883102c00a9e4b) | [Timesheet](https://1sfu-my.sharepoint.com/:x:/g/personal/hamarneh_sfu_ca/EXfKWdGF-QBCtgFGivjFPycBfwZrCIoGwRcEkODk1pRWkw?e=M1zm8O) |
-
-
+| [Tabulated Dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data) | [CTU-CHB dataset](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://www.overleaf.com/project/65a57b95a9883102c00a9e4b) | [Timesheet](https://1sfu-my.sharepoint.com/:x:/g/personal/hamarneh_sfu_ca/EXfKWdGF-QBCtgFGivjFPycBfwZrCIoGwRcEkODk1pRWkw?e=M1zm8O) |
 
 - Dataset Download: Link to download the dataset of this project.
 - Slack channel: Link to private Slack project channel.
@@ -33,10 +33,34 @@ Record a short video (1:40 - 2 minutes maximum) or gif or a simple screen record
 
 <a name="demo"></a>
 ## 1. Demo 📝
+
+### Layout Overview
+
+```bash
+repository
+├── CTU-CHB                     ## CTU-CHB database
+│   ├── dat                         ## Unprocessed raw dat waveforms
+│   ├── dat_cwt                     ## cwt plots
+│   ├── dat_recurrence_plots        ## recurrence plots
+│   ├── dat_spectrogram             ## spectrogram plots
+│   ├── DCNN                        ## DCNN Model training and testing
+│   ├── Feature Extraction          ## Feature extraction files for tabulation
+│   ├── generate_plots              ## Files for generating plots
+│   ├── processed_dat               ## Processed and cleaned waveforms
+│   ├── outcomes.csv                ## CTU-CHB metadata and labels
+│   ├── waveform_processing.py      ## processing waveforms
+├── TabulatedCTG                ## Tabulated CTG dataset
+│   ├── Classify CTU-CHB            ## ML methods on CTU-CHB
+│   ├── fetal_health.csv            ## Tabulated Dataset
+│   ├── ML Methods.py               ## Machine learning methods
+│   ├── NN.py                       ## Neural Network classifier
+├── requirements.txt            ## Setup requirements
+```
+
 ### 1) Machine Learning Demo
 
 Comparing different machine learning models with various physiology signals to assess the status of fetuses.
-![Figure_1](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab)
+<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 
 ```python
@@ -69,45 +93,7 @@ ConfusionMatrixDisplay(cm).plot()
 
 Analysis of fetal statuses with the [Intrapartum Cardiotocography Database](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/)
 
-### DCNN
-Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
-Generating the classification results based on fetal heart rate signals.
-- Install requirements first: `pip install -r requirements.txt`
-- Run the test on the prepared dataset: `python test.py`
-```python
-predictions = model.predict(test_images)
-predicted_classes = np.argmax(predictions, axis=1)
-true_classes = np.argmax(test_labels, axis=1)
-class_counts = np.bincount(predicted_classes)
-
-print("Count of guesses in each class:")
-for cls, count in enumerate(class_counts):
-    print(f"Class {cls}: {count} guesses")
-```
-
-
-### Recurrence Plots
-- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
-- Feature extraction: `python3 "Feature Extraction.py"`
-- Run the program: `python3 GenerateRecurrencePlots.py`
-
-The recurrece plot function used here:
-
-```python
-# Based on: https://stackoverflow.com/questions/33650371/recurrence-plot-in-python
-def rec_plot(data, eps=0.3, steps=15):
-    d = pdist(data[:, None])
-    d = np.floor(d / eps)
-    d[d > steps] = steps
-    Z = squareform(d)
-    return Z
-```
-Here is one sample recurrece plot:
-
-![image](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/f5d9582d-7793-4a3f-bafe-6b67b58a3331)
-
-
-### Spectrogram
+### Pre-processing
 Get the FHR signals by processing the CTU-CHB data.
 Convert the signals to waveform:
 - Install wfdb: `! pip install wfdb`
@@ -126,54 +112,39 @@ new_signal = []
 for i in range(len_s):
 new_signal.extend(selected_segments[i]['seg_hr'])
 ```
-Generate the spectrogram with matlab:
-`[S, f, t] = spectrogram(waveform, window_size, overlap, nfft);`
 
+### DCNN
+Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
+Generating the classification results based on fetal heart rate signals.
+- Run the test on the prepared dataset: `DCNN/python test.py`
 
-### What to find where
+### Recurrence Plots
+- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
+- Feature extraction: `python3 "Feature Extraction.py"`
+- Run the program: `python3 generate_recurrence_plots.py`
 
-Explain briefly what files are found where
+The recurrence plot function used here:
 
-```bash
-repository
-├── Machine Learning Method Testing      ## Comparison of different kinds of machine learning models
-├── CTU-CHB                              ## Work on CTU-CHB database
-├── README.md                            ## Introduction of the project
-├── Tabulate data.ipynb                  ## To tabulate the data 
-├── requirements.txt                     ## Setup requirements
+```python
+# Based on: https://stackoverflow.com/questions/33650371/recurrence-plot-in-python
+def rec_plot(data, eps=0.3, steps=15):
+    d = pdist(data[:, None])
+    d = np.floor(d / eps)
+    d[d > steps] = steps
+    Z = squareform(d)
+    return Z
 ```
+Here is one sample recurrence plot:
+
+![image](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/f5d9582d-7793-4a3f-bafe-6b67b58a3331)
 
 <a name="installation"></a>
 
 ## 2. Installation
 
-### DCNN
-- Install requirements: `pip install -r requirements.txt`
-- Process, load and label: `python process_load_label.py`
-- Generate test/train split (takes a min or more): `python generate.py <imagetype>` (where imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
-- Train Model: `python train.py <num of epochs>`, 10-50 epochs recommended
+Install requirements: `pip install -r requirements.txt`
 
-Sample trained models are in the folder 'Pre-trained Samples'. Run `python test.py` to test these models.
-
-
-To load and use: 
-
-```
-with open('model_architecture.json', 'r') as json_file:
-    architecture = json.load(json_file)
-model = tf.keras.models.model_from_json(architecture)
-model.load_weights('model.weights.h5')
-```
-
-### Recurrence Plots
-- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
-- Feature extraction: `python3 "Feature Extraction.py"`
-- Run the program: `python3 GenerateRecurrencePlots.py`
-
-### Spectrogram
-- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
-- Feature extraction: `python3 "Feature Extraction.py"`
-- Run the program: `matlab -nodisplay -nosplash -nodesktop -r "run('generate_spectrograms.m');exit;"`
+DCNN requires tensorflow to be setup.
 
 
 <a name="repro"></a>
@@ -195,7 +166,8 @@ weighted avg       0.92      0.92      0.92       532
 
 Balanced Accuracy:  0.8463918319428005
 ```
-![dt](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/ccb22ec3-5691-442b-bcf5-91c7c385ca2b)
+<img src="
+https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/ccb22ec3-5691-442b-bcf5-91c7c385ca2b" width="50%" height="50%">
 
 - GaussianNB:
 ```
@@ -212,7 +184,7 @@ weighted avg       0.88      0.83      0.84       532
 
 Balanced Accuracy:  0.7351396856934831
 ```
-![GNB](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/a85a3fd1-cdfc-47fc-ae8d-56d5177347c8)
+<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/a85a3fd1-cdfc-47fc-ae8d-56d5177347c8" width="50%" height="50%">
 
 - RandomForest:
 ```
@@ -230,7 +202,7 @@ weighted avg       0.94      0.95      0.94       532
 Balanced Accuracy:  0.8924032838506523
 
 ```
-![rf](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/a14e88a5-8acd-49c4-857a-5cfc510dc7f1)
+<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/a14e88a5-8acd-49c4-857a-5cfc510dc7f1" width="50%" height="50%">
 
 - KNeighbors Model:
 ```
@@ -259,7 +231,17 @@ The result clearly shows that `proloungued deceleration` and `uterine contractio
 ![image](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/2c44bf3f-631c-4b70-8cda-b7646db4131a)
 
 ### CTU-CHB
-By analysing the graph data generated from the CTU-CHB dataset's signals, we can classify the classes of fetals:
+#### Preprocessing
+Preprocess .dat waveform files.
+#### Image Generation
+Generate plots as images.
+#### DCNN
+- Process, load and label: `python process_load_label.py`
+- Generate test/train split (takes a min or more): `python generate.py <imagetype>` (imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
+- Train Model: `python train.py <num of epochs>`, 15-30 epochs recommended
+
+Sample trained models are in the folder 'Pre-trained Samples'. Run `python test.py` to test these models, output shown below:
+
 ```
 5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 43ms/step
 Class 0: 124 guesses
@@ -268,8 +250,6 @@ Accuracy: 0.7835820895522388
 Recall: 0.546036690896504
 F1-score: 0.5453375453375453
 Precision: 0.6072580645161291
-[[101   6]
- [ 23   4]]
 ```
 
 ## Data Downloading

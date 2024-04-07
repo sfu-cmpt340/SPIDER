@@ -172,7 +172,7 @@ def getLongTermVariability(fhr_signal, sampling_rate, time):
 
 # Define folder path for CTG data
 curr_dir = os.getcwd()
-folder_path = os.path.join(curr_dir, 'processed_dat')
+folder_path = os.path.join(curr_dir, '../processed_dat')
 
 # Define variables for CTG data/feature extraction
 window_size = 15

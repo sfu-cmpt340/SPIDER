@@ -1,4 +1,4 @@
-folder_path = 'processed_dat';
+folder_path = '../processed_dat';
 files = dir(fullfile(folder_path, '*.dat'));
 
 scales = 1:256;
@@ -28,7 +28,7 @@ parfor i = 1:numel(files)
     set(gcf, 'Units', 'pixels', 'Position', [100, 100, 100, 100]);
     set(gcf, 'PaperPosition', [0, 0, 1, 1]);
     [~, filename, ~] = fileparts(files(i).name);
-    output_filename = fullfile('cwt', [filename, '.png']);
+    output_filename = fullfile('../dat_cwt', [filename, '.png']);
     saveas(h, output_filename, 'png');
     close(h);
 end

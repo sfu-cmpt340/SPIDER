@@ -13,8 +13,8 @@ def rec_plot(data, eps=0.3, steps=15):
     return Z
 
 
-input_directory = 'processed_dat'
-output_directory = 'recurrence_plots'
+input_directory = '../processed_dat'
+output_directory = '../dat_recurrence_plots'
 
 file_names = os.listdir(input_directory)
 
