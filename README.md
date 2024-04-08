@@ -82,6 +82,7 @@ Here is one sample recurrence plot:
 ### DCNN Demo (Pretrained)
 
 To just test the DCNN model, run the test on the prepared test split: `python CTU/CHB/DCNN/python test.py`
+
 ![Screenshot 2024-04-08 144435](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/5e4f73de-fcd8-4481-bcaa-b38b95c73a2c)
 
 Instructions for training the model are in the Reproduction section below.
@@ -275,6 +276,11 @@ Training: This assumes the data has been preprocessed, image plots have been gen
 - `python generate.py <imagetype>` - Generate test/train split: (where imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
 - `python train.py <num of epochs>` - Train Model:, 10-50 epochs recommended
 
-More trained models are in the folder 'samples'. Move pretrained model and test npy file into DCNN directory, and run `python test.py` to test models.
-
+To load model (which is seperated into architecture and weights):
+```
+with open('model_architecture.json', 'r') as json_file:
+    architecture = json.load(json_file)
+model = tf.keras.models.model_from_json(architecture)
+model.load_weights('model.weights.h5')
+```
 
