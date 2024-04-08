@@ -53,6 +53,7 @@ Ensure requirements in the Installation section are met.
 ### 1) Tabulated Dataset Demo
 
 Comparing different machine learning models with various physiology signals to assess the status of fetuses.
+
 <img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 To run ML methods on fetal_health.csv: `
@@ -112,7 +113,6 @@ Download the CTU-CHB data: `wget -r -N -c -np https://physionet.org/files/ctu-uh
 ### Machine Learning on Tabulated Dataset
 
 Comparing different machine learning models with various physiology signals to assess the status of fetuses.
-<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 To run ML methods on fetal_health.csv: `
 python TabulatedCTG/ML_Methods.py
@@ -273,7 +273,7 @@ Spectrograms and CWT:
 
 Training: This assumes the data has been preprocessed, image plots have been generated, and you are in the `CTU-CHB/DCNN` directory:
 - `python process_load_label.py` - Process, load and label 
-- `python generate.py <imagetype>` - Generate test/train split: (where imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
+- `python generate.py <type>` - Generate test/train split: (where type is either `dat_spectrogram`, `dat_cwt`, or `dat_recurrence_plots`)
 - `python train.py <num of epochs>` - Train Model:, 10-50 epochs recommended
 
 To load model (which is seperated into architecture and weights):
