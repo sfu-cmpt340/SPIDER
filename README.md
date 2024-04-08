@@ -97,21 +97,9 @@ Analysis of fetal statuses with the [Intrapartum Cardiotocography Database](http
 Get the FHR signals by processing the CTU-CHB data.
 Convert the signals to waveform:
 - Install wfdb: `! pip install wfdb`
-```
-# the total seconds of the file is the length of the file divided by 4 as it was sampled at 4Hz
-ts = np.arange(len(fetal_hr))/4.0
 
-#get the valid segments (ie the processed segments without the long gaps)
-selected_segments = get_valid_segments(fetal_hr, ts, FILEPATH, verbose=False,
-    #max_change=15, verbose_details=True
-)
-len_s = len(selected_segments)
-new_signal = []
+- Run `python3 waveform_processing.py` on dataset downloaded into `/dat`
 
-#add the segments together for the new processed signal
-for i in range(len_s):
-new_signal.extend(selected_segments[i]['seg_hr'])
-```
 
 ### DCNN
 Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
