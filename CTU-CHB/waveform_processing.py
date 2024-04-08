@@ -7,6 +7,16 @@ import wfdb;
 import simple_denoise;
 from simple_denoise import get_valid_segments;
 
+directory_name = 'processed_dat'
+
+#make the directory name if they don't exist
+
+if not os.path.exists(directory_name):
+    os.makedirs(directory_name)
+    print(f"Directory '{directory_name}' created successfully.")
+else:
+    print(f"Directory '{directory_name}' already exists.")
+
 #get the file names
 DIR = 'dat/'
 recnos = np.loadtxt(DIR+'RECORDS')
