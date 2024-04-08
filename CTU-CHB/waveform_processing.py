@@ -18,16 +18,14 @@ else:
     print(f"Directory '{directory_name}' already exists.")
 
 #get the file names
-DIR = 'dat/'
+DIR = 'CTU-CHB/dat/'
 recnos = np.loadtxt(DIR+'RECORDS')
 recnos = [int(x) for x in recnos]
-
-print(str(recnos[0]))
 
 for ind in recnos:
     FILEPATH = DIR+str(ind)
     
-    print(FILEPATH)
+    #print(FILEPATH)
 
     signals, fields = wfdb.rdsamp(FILEPATH)
 
@@ -61,5 +59,6 @@ for ind in recnos:
                 
     #write the data to the new directory
     data = new_signal
-    file_path = 'processed_'+FILEPATH+'.dat'
+    file_path = 'processed_dat/'+str(ind)+'.dat'
     write_array_to_dat_file(data, file_path)
+    #print(file_path)
