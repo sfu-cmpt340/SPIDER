@@ -56,7 +56,7 @@ Comparing different machine learning models with various physiology signals to a
 <img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 To run ML methods on fetal_health.csv: `
-python TabulatedCTG/MLMethods.py
+python TabulatedCTG/ML_Methods.py
 `
 
 ### 2) CTU-CHB Demo
