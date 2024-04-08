@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 # Load Dataset
 pd.set_option('display.max_columns', None)
-df = pd.read_csv('fetal_health.csv')
+df = pd.read_csv('TabulatedCTG/fetal_health.csv')
 
 # Select columns for ML methods
 df = df[['baseline value', 'accelerations', 'fetal_movement', 'uterine_contractions', 'light_decelerations',

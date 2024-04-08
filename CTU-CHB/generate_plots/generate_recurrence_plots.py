@@ -12,9 +12,12 @@ def rec_plot(data, eps=0.3, steps=15):
     Z = squareform(d)
     return Z
 
+input_directory = 'CTU-CHB/processed_dat'
+output_directory = 'CTU-CHB/dat_recurrence_plots'
 
-input_directory = '../processed_dat'
-output_directory = '../dat_recurrence_plots'
+# Create the output directory if it doesn't exist
+if not os.path.exists(output_directory):
+    os.makedirs(output_directory)
 
 file_names = os.listdir(input_directory)
 
