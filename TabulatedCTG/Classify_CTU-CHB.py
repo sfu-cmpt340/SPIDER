@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 
 # Load datasets Kaggle data and CTU-CHB data
 pd.set_option('display.max_columns', None)
-kaggle_df = pd.read_csv('fetal_health.csv')
-CTU_df = pd.read_csv('../CTU-CHB/Feature Extraction/waveform_data.csv')
+kaggle_df = pd.read_csv('TabulatedCTG/fetal_health.csv')
+CTU_df = pd.read_csv('CTU-CHB/Feature Extraction/waveform_data.csv')
 
 # Select columns for ML methods
 kaggle_df = kaggle_df[['baseline value', 'accelerations', 'light_decelerations',
