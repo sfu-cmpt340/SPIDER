@@ -56,12 +56,20 @@ repository
 │   ├── NN.py                       ## Neural Network classifier
 ├── requirements.txt            ## Setup requirements
 ```
+### Setup Requirements
+Install requirements for the project:
+`
+pip install -r requirements.txt
+`
 
-### 1) Machine Learning Demo
+### 1) Tabulated Dataset Demo
 
 Comparing different machine learning models with various physiology signals to assess the status of fetuses.
 <img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
+To run ML methods on fetal_health.csv: `
+python TabulatedCTG/MLMethods.py
+`
 
 ```python
 # Select columns for ML methods
@@ -93,10 +101,11 @@ ConfusionMatrixDisplay(cm).plot()
 
 Analysis of fetal statuses with the [Intrapartum Cardiotocography Database](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/)
 
+- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
+- Move dataset: `mv physionet.org/files/ctu-uhb-ctgdb/1.0.0/* CTU-CHB/dat/`
+
 ### Pre-processing
-Get the FHR signals by processing the CTU-CHB data.
-Convert the signals to waveform:
-- Install wfdb: `! pip install wfdb`
+
 
 - Run `python3 waveform_processing.py` on dataset downloaded into `/dat`
 
@@ -104,15 +113,27 @@ Example signal before and after preprocessing:
 
 <img width="1049" alt="Screenshot 2024-04-06 at 1 27 25 PM" src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/29849456/0449a66b-eedd-4462-9eec-8e17bbd00d40">
 
-### DCNN
-Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
-Generating the classification results based on fetal heart rate signals.
-- Run the test on the prepared dataset: `DCNN/python test.py`
+Get the FHR signals by processing the CTU-CHB data.
+
+Convert the signals to waveform:
+```
+# the total seconds of the file is the length of the file divided by 4 as it was sampled at 4Hz
+ts = np.arange(len(fetal_hr))/4.0
+
+#get the valid segments (ie the processed segments without the long gaps)
+selected_segments = get_valid_segments(fetal_hr, ts, FILEPATH, verbose=False,
+    #max_change=15, verbose_details=True
+)
+len_s = len(selected_segments)
+new_signal = []
+
+#add the segments together for the new processed signal
+for i in range(len_s):
+new_signal.extend(selected_segments[i]['seg_hr'])
+```
 
 ### Recurrence Plots
-- Download dataset: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
-- Feature extraction: `python3 "Feature Extraction.py"`
-- Run the program: `python3 generate_recurrence_plots.py`
+- Run the program: `python3 CTU_CHB/generate_plots/generate_recurrence_plots.py`
 
 The recurrence plot function used here:
 
@@ -129,7 +150,30 @@ Here is one sample recurrence plot:
 
 ![image](https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/f5d9582d-7793-4a3f-bafe-6b67b58a3331)
 
+### Deep Convolutional Neural Network
+Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
+Generating the classification results based on fetal heart rate signals.
+
+Training: This assumes the data has been preprocessed, image plots have been generated, and you are in the `CTU_CHB/DCNN` directory:
+- `python process_load_label.py` - Process, load and label 
+- `python generate.py <imagetype>` - Generate test/train split: (where imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
+- `python train.py <num of epochs>` - Train Model:, 10-50 epochs recommended
+
+
+### DCNN Demo (Pretrained)
+
+To just test the DCNN model, run the test on the prepared test split: `python CTU/CHB/DCNN/python test.py`
+![Screenshot 2024-04-08 144435](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/5e4f73de-fcd8-4481-bcaa-b38b95c73a2c)
+
 <a name="installation"></a>
+
+### Feature Extraction
+
+- Feature extraction: `python3 "CTU_CHB/Feature Extraction/Feature_Extraction.py"`
+- Test ML methods from tabulated dataset on new dataset: `python3 "TabulatedCTG/Classify_CTU-CHB.py"`
+
+![CTU_ML_Predictions](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/dcae53c0-33a6-4063-a64b-c6ecb760a797)
+
 
 ## 2. Installation
 
@@ -141,7 +185,40 @@ DCNN requires tensorflow to be setup.
 <a name="repro"></a>
 ## 3. Reproduction
 
-### Machine Learning
+Comparing different machine learning models with various physiology signals to assess the status of fetuses.
+<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
+
+To run ML methods on fetal_health.csv: `
+python TabulatedCTG/MLMethods.py
+`
+
+```python
+# Select columns for ML methods
+df = df[['baseline value', 'accelerations', 'fetal_movement', 'uterine_contractions', 'light_decelerations',
+        'severe_decelerations', 'prolongued_decelerations', 'abnormal_short_term_variability',
+        'mean_value_of_short_term_variability', 'percentage_of_time_with_abnormal_long_term_variability',
+        'mean_value_of_long_term_variability', 'fetal_health']]
+
+# Create X and Y data
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+
+# Split the data into 75% training and 25% testing data
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# Output the accuracies
+print(model)
+print(classification_report(y_test, y_pred))
+print("Balanced Accuracy: ", balanced_accuracy_score(y_test, y_pred))
+
+# Output the confusion matrix
+cm = confusion_matrix(y_test, y_pred, labels=[1,2,3])
+ConfusionMatrixDisplay(cm).plot()
+```
+
+### Machine Learning on Tabulated Dataset
 `python3 "ML Methods.py"`
 - DecisionTree:
 ```
@@ -231,17 +308,7 @@ Generate plots as images.
 - Generate test/train split (takes a min or more): `python generate.py <imagetype>` (imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
 - Train Model: `python train.py <num of epochs>`, 15-30 epochs recommended
 
-Sample trained models are in the folder 'Pre-trained Samples'. Run `python test.py` to test these models, output shown below:
-
-```
-5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 43ms/step
-Class 0: 124 guesses
-Class 1: 10 guesses
-Accuracy: 0.7835820895522388
-Recall: 0.546036690896504
-F1-score: 0.5453375453375453
-Precision: 0.6072580645161291
-```
+Sample trained models are in the folder 'Pre-trained Samples'. Move pretrained model and test npy file into DCNN directory, and run `python test.py` to test models.
 
 ## Data Downloading
 
