@@ -1,27 +1,16 @@
 
-# Fetal Health Classification from Cardiotocography Data![download](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/559234c8-60a4-4a66-862d-5a1c8b7c89cf)
-
+# Fetal Health Classification from Cardiotocography Data
+<img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/559234c8-60a4-4a66-862d-5a1c8b7c89cf" width="10%" height="10%">
 
 # Introduction ✏️
-Using this [tabulated dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data), which has cardiotocography (CTG) biosignals for 2126 fetuses, each with 22 features and a label: Normal, Suspect, and Pathological.
-[CTU-CHB dataset](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/)
-
-Our goal is to create a robust model which can predict fetal health from this data.
-We plan to train and test several classification models (such as linear, svm, supervised learning ML) to predict/classify the health of the fetus, and identify which model is most effective.
+Cardiotocography (CTG) is a method commonly used to assess fetal heart rate with ultrasound during labour, and is often used to determine if a fetus is at risk of hypoxia. We evaluated methods on two different datasets to create models that accurately predict the health of a fetus. Our models on the first dataset include testing several classification models to predict/classify the health of the fetus, and identify which model is most effective. On the second dataset, we preprocess biosignals into usable data, then represent as images and train a DCNN to predict fetal health. We also venture into feature extraction to test the efficacy of methods used in the first dataset on the second
 
 ## Important Links 🔗
 
 | [Tabulated Dataset](https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data) | [CTU-CHB dataset](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/) | [Slack channel](https://app.slack.com/client/T06AP91EYG6/C06DW38TA3X) | [Project report](https://www.overleaf.com/project/65a57b95a9883102c00a9e4b) | [Timesheet](https://1sfu-my.sharepoint.com/:x:/g/personal/hamarneh_sfu_ca/EXfKWdGF-QBCtgFGivjFPycBfwZrCIoGwRcEkODk1pRWkw?e=M1zm8O) |
 
-- Dataset Download: Link to download the dataset of this project.
-- Slack channel: Link to private Slack project channel.
-- Project report: Link to Overleaf project report document.
-- Timesheet: Link to timesheet (pinned in your project's Slack channel) where you track per student the time and tasks completed/participated for this project/
-
-
 ## Video/demo/GIF 📽️
-Record a short video (1:40 - 2 minutes maximum) or gif or a simple screen recording or even using PowerPoint with audio or with text, showcasing your work.
-
+https://drive.google.com/file/d/1HbFV1k-9HB5zfbAsMjozX7fhjIk0FmpX/view
 
 ## Table of Contents
 1. [Demo](#demo)
@@ -36,8 +25,8 @@ Record a short video (1:40 - 2 minutes maximum) or gif or a simple screen record
 
 ### Layout Overview
 
-```bash
-repository
+```
+fetal-health-classification
 ├── CTU-CHB                     ## CTU-CHB database
 │   ├── dat                         ## Unprocessed raw dat waveforms
 │   ├── dat_cwt                     ## cwt plots
@@ -49,11 +38,13 @@ repository
 │   ├── processed_dat               ## Processed and cleaned waveforms
 │   ├── outcomes.csv                ## CTU-CHB metadata and labels
 │   ├── waveform_processing.py      ## processing waveforms
+|
 ├── TabulatedCTG                ## Tabulated CTG dataset
 │   ├── Classify CTU-CHB            ## ML methods on CTU-CHB
 │   ├── fetal_health.csv            ## Tabulated Dataset
 │   ├── ML Methods.py               ## Machine learning methods
 │   ├── NN.py                       ## Neural Network classifier
+|
 ├── requirements.txt            ## Setup requirements
 ```
 ### Setup Requirements
@@ -70,7 +61,7 @@ python TabulatedCTG/MLMethods.py
 
 ### 2) CTU-CHB Demo
 
-Analysis of fetal statuses with the [Intrapartum Cardiotocography Database](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/).
+Analysis of FHR waveforms with the [Intrapartum Cardiotocography Database](https://physionet.org/content/ctu-uhb-ctgdb/1.0.0/).
 
 ### Pre-processing
 
@@ -106,15 +97,13 @@ Instructions for training the model are in the Reproduction section below.
 ## 2. Installation
 
 Install requirements: `pip install -r requirements.txt`
-
-DCNN requires tensorflow to be setup.
+- DCNN requires tensorflow to be setup.
 
 Download the `fetal-health.csv`: https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification/data 
-
-Place into `TabulatedCTG/`.
+- Place into `TabulatedCTG/`.
 
 Download the CTU-CHB data: `wget -r -N -c -np https://physionet.org/files/ctu-uhb-ctgdb/1.0.0/`
-Place waveform .dat files into `dat/`.
+- Place waveform .dat files into `dat/`.
 
 <a name="repro"></a>
 ## 3. Reproduction
