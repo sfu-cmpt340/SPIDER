@@ -56,7 +56,7 @@ Comparing different machine learning models with various physiology signals to a
 <img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 To run ML methods on fetal_health.csv: `
-python TabulatedCTG/MLMethods.py
+python TabulatedCTG/ML_Methods.py
 `
 
 ### 2) CTU-CHB Demo
@@ -72,7 +72,7 @@ Example signal before and after preprocessing:
 <img width="1049" alt="Screenshot 2024-04-06 at 1 27 25 PM" src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/29849456/0449a66b-eedd-4462-9eec-8e17bbd00d40">
 
 ### Recurrence Plots
-- Run the program: `python3 CTU_CHB/generate_plots/generate_recurrence_plots.py`
+- Run the program: `python3 CTU-CHB/generate_plots/generate_recurrence_plots.py`
 
 Here is one sample recurrence plot:
 
@@ -88,7 +88,7 @@ Instructions for training the model are in the Reproduction section below.
 
 ### Feature Extraction
 
-- Feature extraction: `python3 "CTU_CHB/Feature Extraction/Feature_Extraction.py"`
+- Feature extraction: `python3 "CTU-CHB/Feature Extraction/Feature_Extraction.py"`
 - Test ML methods from tabulated dataset on new dataset: `python3 "TabulatedCTG/Classify_CTU-CHB.py"`
 
 ![CTU_ML_Predictions](https://github.com/sfu-cmpt340/fetal-health-classification/assets/59947126/dcae53c0-33a6-4063-a64b-c6ecb760a797)
@@ -114,7 +114,7 @@ Comparing different machine learning models with various physiology signals to a
 <img src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/113268694/d7c0f112-893e-4353-8edd-fc59dad33bab" width="50%" height="50%">
 
 To run ML methods on fetal_health.csv: `
-python TabulatedCTG/MLMethods.py
+python TabulatedCTG/ML_Methods.py
 `
 
 ```python
@@ -251,7 +251,7 @@ new_signal.extend(selected_segments[i]['seg_hr'])
 
 #### Image Generation
 
-- Recurrence Plots: `python3 CTU_CHB/generate_plots/generate_recurrence_plots.py`
+- Recurrence Plots: `python3 CTU-CHB/generate_plots/generate_recurrence_plots.py`
 
 The recurrence plot function used here:
 
@@ -270,7 +270,7 @@ Spectrograms and CWT:
 
 #### DCNN
 
-Training: This assumes the data has been preprocessed, image plots have been generated, and you are in the `CTU_CHB/DCNN` directory:
+Training: This assumes the data has been preprocessed, image plots have been generated, and you are in the `CTU-CHB/DCNN` directory:
 - `python process_load_label.py` - Process, load and label 
 - `python generate.py <imagetype>` - Generate test/train split: (where imagetype is either `spectrogram`, `cwt`, or `recurrence_plots`)
 - `python train.py <num of epochs>` - Train Model:, 10-50 epochs recommended
