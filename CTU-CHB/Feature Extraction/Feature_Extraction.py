@@ -172,7 +172,7 @@ def getLongTermVariability(fhr_signal, sampling_rate, time):
 
 # Define folder path for CTG data
 curr_dir = os.getcwd()
-folder_path = os.path.join(curr_dir, '../processed_dat')
+folder_path = os.path.join(curr_dir, 'CTU-CHB/processed_dat')
 
 # Define variables for CTG data/feature extraction
 window_size = 15
@@ -192,8 +192,8 @@ for filename in os.listdir(folder_path):
     if filename.endswith(".dat"):
         file_path = os.path.join(folder_path, filename)   
 
-        fhr_signal = np.loadtxt(file_path)
-        if len(fhr_signal) > 0:
+        if os.path.getsize(file_path) > 0:
+            fhr_signal = np.loadtxt(file_path)
             LB = getBaseline(fhr_signal)
             time = np.arange(len(fhr_signal)) / sampling_rate
 
@@ -222,5 +222,5 @@ df = pd.DataFrame(data_list, columns=columns)
 # print(df)
 
 # Convert to csv
-df.to_csv('waveform_data.csv', index=False)
+df.to_csv('CTU-CHB/Feature Extraction/waveform_data.csv', index=False)
 
