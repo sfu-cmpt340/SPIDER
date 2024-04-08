@@ -100,6 +100,9 @@ Convert the signals to waveform:
 
 - Run `python3 waveform_processing.py` on dataset downloaded into `/dat`
 
+Example signal before and after preprocessing:
+
+<img width="1049" alt="Screenshot 2024-04-06 at 1 27 25 PM" src="https://github.com/sfu-cmpt340/fetal-health-classification/assets/29849456/0449a66b-eedd-4462-9eec-8e17bbd00d40">
 
 ### DCNN
 Model for graph-structured data, using recurrence plots, spectrograms and cwt as inputs.
