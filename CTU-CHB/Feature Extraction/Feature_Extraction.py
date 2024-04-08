@@ -190,37 +190,37 @@ data_list = []
 # Iterate through all the files in the processed data
 for filename in os.listdir(folder_path):
     if filename.endswith(".dat"):
-        file_path = os.path.join(folder_path, filename)
-    
-        with open(file_path, 'rb') as file:
-            fhr_signal = np.fromfile(file, dtype=np.float64)
-            if len(fhr_signal) > 0:
-                LB = getBaseline(fhr_signal)
-                time = np.arange(len(fhr_signal)) / sampling_rate
+        file_path = os.path.join(folder_path, filename)   
 
-                # printWaveform(fhr_signal, sampling_rate, LB, time)
-                
-                segments_above_baseline, segments_below_baseline = getSegments(fhr_signal, LB,)
-                AC = getAccelerations(segments_above_baseline, window_size, threshold_bpm, LB, time)
-                DC, DP = getDecelerations(segments_below_baseline, window_size, prolongued_window_size, threshold_bpm, LB, time)
-                
-                MSTV, ASTV = getShortTermVariability(fhr_signal, sampling_rate, time)
-                MLTV, ALTV = getLongTermVariability(fhr_signal, sampling_rate, time)
-                
-                data = {'baseline value': LB,
-                        'accelerations': AC,
-                        'decelerations': DC,
-                        'prolongued_decelerations': DP,
-                        'abnormal_short_term_variability': ASTV,
-                        'mean_value_of_short_term_variability': MSTV,
-                        'percentage_of_time_with_abnormal_long_term_variability': ALTV,
-                        'mean_value_of_long_term_variability': MLTV}
-                
-                data_list.append(data)
+        fhr_signal = np.loadtxt(file_path)
+        if len(fhr_signal) > 0:
+            LB = getBaseline(fhr_signal)
+            time = np.arange(len(fhr_signal)) / sampling_rate
+
+            # printWaveform(fhr_signal, sampling_rate, LB, time)
+            
+            segments_above_baseline, segments_below_baseline = getSegments(fhr_signal, LB,)
+            AC = getAccelerations(segments_above_baseline, window_size, threshold_bpm, LB, time)
+            DC, DP = getDecelerations(segments_below_baseline, window_size, prolongued_window_size, threshold_bpm, LB, time)
+            
+            MSTV, ASTV = getShortTermVariability(fhr_signal, sampling_rate, time)
+            MLTV, ALTV = getLongTermVariability(fhr_signal, sampling_rate, time)
+            
+            data = {'baseline value': LB,
+                    'accelerations': AC,
+                    'decelerations': DC,
+                    'prolongued_decelerations': DP,
+                    'abnormal_short_term_variability': ASTV,
+                    'mean_value_of_short_term_variability': MSTV,
+                    'percentage_of_time_with_abnormal_long_term_variability': ALTV,
+                    'mean_value_of_long_term_variability': MLTV}
+            
+            data_list.append(data)
+
 # Convert list to Pandas DataFrame
 df = pd.DataFrame(data_list, columns=columns)
 # print(df)
 
 # Convert to csv
-df.to_csv('CTU-CHB_data.csv', index=False)
+df.to_csv('waveform_data.csv', index=False)
 
